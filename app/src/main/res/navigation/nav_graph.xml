@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/authorizationFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.itis.my.fragments.HomeFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/notesFragment"
+        android:name="com.itis.my.fragments.NotesFragment"
+        android:label="notes_fragment"
+        tools:layout="@layout/notes_fragment" />
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.itis.my.fragments.LocationFragment"
+        android:label="location_fragment"
+        tools:layout="@layout/location_fragment" />
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.itis.my.fragments.VideoFragment"
+        android:label="fragment_video"
+        tools:layout="@layout/fragment_video" />
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.itis.my.fragments.PhotoFragment"
+        android:label="photo_fragment"
+        tools:layout="@layout/photo_fragment" />
+    <fragment
+        android:id="@+id/authorizationFragment"
+        android:name="com.itis.my.fragments.AuthorizationFragment"
+        android:label="authorization_fragment"
+        tools:layout="@layout/authorization_fragment" >
+        <action
+            android:id="@+id/action_authorizationFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+</navigation>

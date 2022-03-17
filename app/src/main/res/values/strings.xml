@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">DTHE App</string>
+    <string name="first_name">Имя:</string>
+    <string name="last_name">Фамилия:</string>
+    <string name="group_name">Группа:</string>
+    <string name="main_page">Главная</string>
+    <string name="notes_page">Заметки</string>
+    <string name="photo_page">Фото</string>
+    <string name="video_page">Видео</string>
+    <string name="location_page">Места</string>
+    <string name="location_title">Местоположение %1$d</string>
+    <string name="type_first_name">Введите имя</string>
+    <string name="type_last_name">Введите фамилию</string>
+    <string name="type_group">Введите группу</string>
+    <string name="save">Сохранить</string>
+    <string name="fill_in_data">Заполните данные</string>
+    <string name="note">Заметка %1$d</string>
+    <string name="type_note_hint">Введите текст</string>
+    <string name="add">Добавить</string>
+    <string name="cancel">Отмена</string>
+    <string name="empty_note_error">Нельзя сохранить пустую заметку</string>
+    <string name="creation_date_title">Дата создания</string>
+    <string name="creation_date">Дата создания: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
