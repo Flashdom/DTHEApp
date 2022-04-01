@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "381524571258",
+    "project_id": "dthe-980e8",
+    "storage_bucket": "dthe-980e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381524571258:android:ad8b122893ada472a6b7c3",
+        "android_client_info": {
+          "package_name": "com.itis.my"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381524571258-rpo597esbfrpg12e67d2qsg2knqfnkm4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5Sa8k3kH31NthW52SadN0VduzEgP01WY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381524571258-rpo597esbfrpg12e67d2qsg2knqfnkm4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

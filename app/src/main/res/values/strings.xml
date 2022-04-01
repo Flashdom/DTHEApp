@@ -21,6 +21,5 @@
     <string name="empty_note_error">Нельзя сохранить пустую заметку</string>
     <string name="creation_date_title">Дата создания</string>
     <string name="creation_date">Дата создания: %1$s</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="auth_error">Ошибка авторизации</string>
 </resources>

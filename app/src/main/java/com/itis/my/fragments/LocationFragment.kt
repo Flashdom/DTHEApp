@@ -77,18 +77,24 @@ class LocationFragment :
             )
         }
         binding.fabAddLocation.setOnClickListener {
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-            fusedLocationClient.getCurrentLocation(
-                LocationRequest.QUALITY_HIGH_ACCURACY, CancellationTokenSource().token
-            )
-                .addOnSuccessListener { location ->
-                    val addresses = geo.getFromLocation(location.latitude, location.longitude, 1)
-                    val currentLocation = Location(
-                        id = 0, text = addresses[0].getAddressLine(0),
-                        Instant.now().toEpochMilli()
-                    )
-                    viewModel.saveLocation(currentLocation)
-                }
+            try {
+                fusedLocationClient =
+                    LocationServices.getFusedLocationProviderClient(requireActivity())
+                fusedLocationClient.getCurrentLocation(
+                    LocationRequest.QUALITY_HIGH_ACCURACY, CancellationTokenSource().token
+                )
+                    .addOnSuccessListener { location ->
+                        val addresses =
+                            geo.getFromLocation(location.latitude, location.longitude, 1)
+                        val currentLocation = Location(
+                            id = 0, text = addresses[0].getAddressLine(0),
+                            Instant.now().toEpochMilli()
+                        )
+                        viewModel.saveLocation(currentLocation)
+                    }
+            } catch (e: Throwable) {
+
+            }
         }
     }
 }

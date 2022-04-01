@@ -1,57 +1,76 @@
 package com.itis.my.fragments
 
-import android.content.Context
+import android.app.Activity.RESULT_OK
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.itis.my.MainActivity
 import com.itis.my.R
+import com.itis.my.Repository
 import com.itis.my.databinding.AuthorizationFragmentBinding
-import com.itis.my.model.User
-import java.time.Instant
+
 
 class AuthorizationFragment :
     ViewBindingFragment<AuthorizationFragmentBinding>(AuthorizationFragmentBinding::inflate) {
 
     private val viewModel: AuthorizationViewModel by viewModels()
+    private var auth: FirebaseAuth = Firebase.auth
+    private val signInLauncher = registerForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) { res ->
+        this.onSignInResult(res)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).binding.bnvMenu.visibility = View.GONE
-        if (requireContext().getSharedPreferences("Settings", Context.MODE_PRIVATE)
-                .getBoolean("isAuthorized", false)
-        ) {
-            (activity as MainActivity).binding.bnvMenu.visibility = View.VISIBLE
-            findNavController().navigate(AuthorizationFragmentDirections.actionAuthorizationFragmentToMainFragment())
+        if (auth.currentUser != null) {
+            Repository.initUser(auth.currentUser!!)
+            navigateToMain()
+        } else {
+            val providers = arrayListOf(
+                AuthUI.IdpConfig.EmailBuilder().build()
+            )
+
+            val signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build()
+            signInLauncher.launch(signInIntent)
         }
+
+
         binding.btnSave.setOnClickListener {
-            if (binding.tietFirstName.text.isNullOrBlank() || binding.tietLastName.text.isNullOrBlank() || binding.tietGroup.text.isNullOrBlank()) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.fill_in_data),
-                    Toast.LENGTH_LONG
-                ).show()
+            if (binding.tietGroup.text.isNullOrBlank()) {
+                Toast.makeText(requireContext(), R.string.fill_in_data, Toast.LENGTH_LONG).show()
             } else {
-
-                viewModel.saveUserInfo(
-                    User(
-                        binding.tietFirstName.text.toString(),
-                        binding.tietLastName.text.toString(),
-                        binding.tietGroup.text.toString(),
-                        Instant.now().toEpochMilli()
-                    )
-                )
-                (activity as MainActivity).binding.bnvMenu.visibility = View.VISIBLE
-                requireContext().getSharedPreferences("Settings", Context.MODE_PRIVATE).edit()
-                    .putBoolean("isAuthorized", true).apply()
-                findNavController().navigate(AuthorizationFragmentDirections.actionAuthorizationFragmentToMainFragment())
+                viewModel.saveUserInfo(binding.tietGroup.text.toString())
+                navigateToMain()
             }
-
-
         }
+    }
 
+    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
+        if (result.resultCode == RESULT_OK) {
+            val user = FirebaseAuth.getInstance().currentUser
+            Repository.initUser(user!!)
+        } else {
+            Toast.makeText(requireContext(), getString(R.string.auth_error), Toast.LENGTH_LONG)
+                .show()
+        }
+    }
+
+    private fun navigateToMain() {
+        (activity as MainActivity).binding.bnvMenu.visibility = View.VISIBLE
+        findNavController().navigate(AuthorizationFragmentDirections.actionAuthorizationFragmentToMainFragment())
     }
 
 

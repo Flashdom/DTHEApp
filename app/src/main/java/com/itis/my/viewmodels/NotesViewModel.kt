@@ -27,11 +27,8 @@ class NotesViewModel : ViewModel() {
     }
 
     fun saveNote(note: Note) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
                 Repository.saveNotes(listOf(note))
-            }
-
         }
 
     }

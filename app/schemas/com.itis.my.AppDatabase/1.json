@@ -2,52 +2,8 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1e14ee0e7ecbf885f886b5029afc418c",
+    "identityHash": "76222029c639bf6f238b38cb2049e876",
     "entities": [
-      {
-        "tableName": "users",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `first_name` TEXT NOT NULL, `last_name` TEXT NOT NULL, `group` TEXT NOT NULL, `created_at` INTEGER NOT NULL, PRIMARY KEY(`id`))",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "firstName",
-            "columnName": "first_name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "lastName",
-            "columnName": "last_name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "group",
-            "columnName": "group",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "created_at",
-            "columnName": "created_at",
-            "affinity": "INTEGER",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
       {
         "tableName": "video",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `video_value` TEXT NOT NULL, `created_at` INTEGER NOT NULL)",
@@ -180,7 +136,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1e14ee0e7ecbf885f886b5029afc418c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '76222029c639bf6f238b38cb2049e876')"
     ]
   }
 }

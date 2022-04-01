@@ -41,7 +41,8 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Note) {
-            val zdt = Instant.ofEpochMilli(item.createdAt).atZone(ZoneId.systemDefault()).toLocalDateTime()
+            val zdt = Instant.ofEpochMilli(item.createdAt).atZone(ZoneId.systemDefault())
+                .toLocalDateTime()
             binding.tvNoteTitle.text =
                 itemView.context.getString(R.string.note, adapterPosition + 1)
             binding.tvNote.text = item.text

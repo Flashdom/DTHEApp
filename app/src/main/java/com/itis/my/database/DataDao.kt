@@ -10,8 +10,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 abstract class DataDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun saveUserInfo(userInfo: UserEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun saveNotes(notes: List<NoteEntity>)
@@ -24,9 +22,6 @@ abstract class DataDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun saveLocations(locations: List<LocationEntity>)
-
-    @Query("SELECT * FROM ${UserEntity.TABLE_NAME}")
-    abstract fun getUserInfoFromDb(): UserEntity
 
     @Query("SELECT * FROM ${NoteEntity.TABLE_NAME}")
     abstract fun listenNotesFromDb(): Flow<List<NoteEntity>>

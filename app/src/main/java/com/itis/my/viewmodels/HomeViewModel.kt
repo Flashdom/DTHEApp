@@ -19,7 +19,10 @@ class HomeViewModel : ViewModel() {
     fun getUserInfo() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                userInfoLiveData.postValue(Repository.getUserInfo())
+                Repository.getCurrentUser { user ->
+                    userInfoLiveData.postValue(user)
+                }
+
             }
 
         }
