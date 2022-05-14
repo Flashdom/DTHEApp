@@ -6,12 +6,12 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.itis.my.adapters.NoteAdapter
-import com.itis.my.databinding.NotesFragmentBinding
+import com.itis.my.databinding.FragmentNotesBinding
 import com.itis.my.fragments.adding.AddingNoteFragment
 import com.itis.my.model.Note
 import com.itis.my.viewmodels.NotesViewModel
 
-class NotesFragment : ViewBindingFragment<NotesFragmentBinding>(NotesFragmentBinding::inflate) {
+class NotesFragment : ViewBindingFragment<FragmentNotesBinding>(FragmentNotesBinding::inflate) {
 
 
     private val viewModel: NotesViewModel by viewModels()

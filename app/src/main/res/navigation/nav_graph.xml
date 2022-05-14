@@ -14,27 +14,27 @@
         android:id="@+id/notesFragment"
         android:name="com.itis.my.fragments.NotesFragment"
         android:label="notes_fragment"
-        tools:layout="@layout/notes_fragment" />
+        tools:layout="@layout/fragment_notes" />
     <fragment
         android:id="@+id/locationFragment"
         android:name="com.itis.my.fragments.LocationFragment"
         android:label="location_fragment"
-        tools:layout="@layout/location_fragment" />
+        tools:layout="@layout/fragment_location" />
     <fragment
         android:id="@+id/videoFragment"
-        android:name="com.itis.my.fragments.VideoFragment"
+        android:name="com.itis.my.fragments.ConnectionFragment"
         android:label="fragment_video"
-        tools:layout="@layout/fragment_video" />
+        tools:layout="@layout/fragment_connection" />
     <fragment
         android:id="@+id/photoFragment"
-        android:name="com.itis.my.fragments.PhotoFragment"
+        android:name="com.itis.my.fragments.MediaFragment"
         android:label="photo_fragment"
-        tools:layout="@layout/photo_fragment" />
+        tools:layout="@layout/fragment_media" />
     <fragment
         android:id="@+id/authorizationFragment"
         android:name="com.itis.my.fragments.AuthorizationFragment"
         android:label="authorization_fragment"
-        tools:layout="@layout/authorization_fragment" >
+        tools:layout="@layout/fragment_authorization" >
         <action
             android:id="@+id/action_authorizationFragment_to_mainFragment"
             app:destination="@id/mainFragment" />

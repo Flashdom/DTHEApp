@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.LocationRequest
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -14,7 +15,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.itis.my.adapters.LocationAdapter
-import com.itis.my.databinding.LocationFragmentBinding
+import com.itis.my.databinding.FragmentLocationBinding
 import com.itis.my.model.Location
 import com.itis.my.viewmodels.LocationViewModel
 import java.time.Instant
@@ -22,7 +23,7 @@ import java.util.*
 
 
 class LocationFragment :
-    ViewBindingFragment<LocationFragmentBinding>(LocationFragmentBinding::inflate) {
+    ViewBindingFragment<FragmentLocationBinding>(FragmentLocationBinding::inflate) {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -93,7 +94,7 @@ class LocationFragment :
                         viewModel.saveLocation(currentLocation)
                     }
             } catch (e: Throwable) {
-
+                Log.d("a0", "b")
             }
         }
     }

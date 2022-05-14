@@ -3,22 +3,23 @@ package com.itis.my.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.itis.my.database.entity.NoteEntity.Companion.TABLE_NAME
+import com.itis.my.database.entity.AudioEntity.Companion.TABLE_NAME
 
 @Entity(tableName = TABLE_NAME)
-class NoteEntity
+class AudioEntity
     (
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ID)
-    val id: String,
-    @ColumnInfo(name = NOTE_TEXT)
-    val noteText: String,
+    val id: Int,
+    @ColumnInfo(name = AUDIO_URI)
+    val audioUri: String,
     @ColumnInfo(name = CREATED_AT)
     val createdAt: Long
 ) {
     companion object {
-        const val TABLE_NAME = "note"
+        const val TABLE_NAME = "audio"
         const val ID = "id"
-        const val NOTE_TEXT = "note_text"
+        const val AUDIO_URI = "audio_uri"
         const val CREATED_AT = "created_at"
     }
 }

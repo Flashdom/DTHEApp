@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.itis.my.databinding.ActivityMainBinding
 import com.itis.my.fragments.*
 
+
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
@@ -13,9 +14,11 @@ class MainActivity : AppCompatActivity() {
 
     private val homeFragment = HomeFragment()
     private val notesFragment = NotesFragment()
-    private val photoFragment = PhotoFragment()
-    private val videoFragment = VideoFragment()
+    private val mediaFragment = MediaFragment()
+    private val connectionFragment = ConnectionFragment()
     private val locationFragment = LocationFragment()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +38,12 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.photo_fragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.fcv_container, photoFragment).commit()
+                        .replace(R.id.fcv_container, mediaFragment).commit()
                     true
                 }
                 R.id.video_fragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.fcv_container, videoFragment).commit()
+                        .replace(R.id.fcv_container, connectionFragment).commit()
                     true
                 }
                 R.id.location_fragment -> {

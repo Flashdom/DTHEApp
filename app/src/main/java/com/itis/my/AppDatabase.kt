@@ -3,16 +3,14 @@ package com.itis.my
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.itis.my.database.DataDao
-import com.itis.my.database.entity.LocationEntity
-import com.itis.my.database.entity.NoteEntity
-import com.itis.my.database.entity.PhotoEntity
-import com.itis.my.database.entity.VideoEntity
+import com.itis.my.database.entity.*
 
 @Database(
     entities =
     [VideoEntity::class,
         PhotoEntity::class,
         NoteEntity::class,
+        AudioEntity::class,
         LocationEntity::class],
     version = 1,
     exportSchema = true

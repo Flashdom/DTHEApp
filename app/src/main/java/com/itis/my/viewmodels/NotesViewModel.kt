@@ -4,11 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.itis.my.Repository
+import com.itis.my.InfoRepository
 import com.itis.my.model.Note
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class NotesViewModel : ViewModel() {
 
@@ -18,7 +17,7 @@ class NotesViewModel : ViewModel() {
 
     fun listenNotesFromDb() {
         viewModelScope.launch {
-            Repository.listenNotes().collect { notes ->
+            InfoRepository.listenNotes().collect { notes ->
                 notesLiveData.postValue(notes)
             }
         }
@@ -28,7 +27,7 @@ class NotesViewModel : ViewModel() {
 
     fun saveNote(note: Note) {
         viewModelScope.launch(Dispatchers.IO) {
-                Repository.saveNotes(listOf(note))
+                InfoRepository.saveNotes(listOf(note))
         }
 
     }

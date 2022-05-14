@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import com.itis.my.R
 import com.itis.my.databinding.FragmentAddingNoteBinding
+import com.itis.my.fragments.HomeFragment
 import com.itis.my.fragments.NotesFragment
 import com.itis.my.model.Note
 import java.time.Instant
@@ -45,6 +46,16 @@ class AddingNoteFragment : DialogFragment() {
                     Toast.LENGTH_LONG
                 ).show()
             } else {
+                setFragmentResult(
+                    HomeFragment.HOME_REQUEST_KEY,
+                    bundleOf(
+                        HomeFragment.HOME_REQUEST_KEY to Note(
+                            0,
+                            binding.tietNote.text.toString(),
+                            Instant.now().toEpochMilli()
+                        )
+                    )
+                )
                 setFragmentResult(
                     NotesFragment.NOTE_REQUEST_KEY,
                     bundleOf(

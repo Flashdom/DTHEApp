@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.itis.my.R
 import com.itis.my.databinding.ItemLocationBinding
 import com.itis.my.model.Location
-import java.time.Instant
-import java.time.ZoneId
+import com.itis.my.utils.getDateString
 
 class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>() {
 
@@ -41,12 +40,11 @@ class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>
     class LocationViewHolder(private val binding: ItemLocationBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Location) {
-            val zdt = Instant.ofEpochMilli(item.createdAt).atZone(ZoneId.systemDefault()).toLocalDateTime()
             binding.tvLocationTitle.text =
                 itemView.context.getString(R.string.location_title, adapterPosition + 1)
             binding.tvCreatedAt.text = itemView.context.getString(
                 R.string.creation_date,
-                "${zdt.dayOfMonth}.${zdt.month.value}.${zdt.year}  ${zdt.hour}:${zdt.minute}:${zdt.second}"
+                getDateString(item.createdAt)
             )
             binding.tvLocationText.text = item.text
         }

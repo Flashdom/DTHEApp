@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.itis.my.Repository
+import com.itis.my.InfoRepository
+import com.itis.my.model.Connection
 import com.itis.my.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class HomeViewModel : ViewModel() {
 
@@ -17,15 +17,23 @@ class HomeViewModel : ViewModel() {
         get() = userInfoLiveData
 
     fun getUserInfo() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                Repository.getCurrentUser { user ->
-                    userInfoLiveData.postValue(user)
-                }
-
+        viewModelScope.launch(Dispatchers.IO) {
+            InfoRepository.getCurrentUser { user ->
+                userInfoLiveData.postValue(user)
             }
-
         }
+    }
 
+
+    fun saveFeedBack(data: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            InfoRepository.saveUserFeedback(data)
+        }
+    }
+
+    fun saveQrCode(connection: Connection) {
+        viewModelScope.launch(Dispatchers.IO) {
+            InfoRepository.saveUserConnection(connection)
+        }
     }
 }

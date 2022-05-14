@@ -9,9 +9,8 @@ import com.itis.my.database.entity.LocationEntity.Companion.TABLE_NAME
 @Entity(tableName = TABLE_NAME)
 class LocationEntity
     (
-    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ID)
-    val id: Int,
+    val id: String,
     @ColumnInfo(name = LOCATION)
     val locationName: String,
     @ColumnInfo(name = CREATED_AT)

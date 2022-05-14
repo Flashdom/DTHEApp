@@ -12,14 +12,14 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.itis.my.InfoRepository
 import com.itis.my.MainActivity
 import com.itis.my.R
-import com.itis.my.Repository
-import com.itis.my.databinding.AuthorizationFragmentBinding
+import com.itis.my.databinding.FragmentAuthorizationBinding
 
 
 class AuthorizationFragment :
-    ViewBindingFragment<AuthorizationFragmentBinding>(AuthorizationFragmentBinding::inflate) {
+    ViewBindingFragment<FragmentAuthorizationBinding>(FragmentAuthorizationBinding::inflate) {
 
     private val viewModel: AuthorizationViewModel by viewModels()
     private var auth: FirebaseAuth = Firebase.auth
@@ -33,9 +33,10 @@ class AuthorizationFragment :
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).binding.bnvMenu.visibility = View.GONE
         if (auth.currentUser != null) {
-            Repository.initUser(auth.currentUser!!)
+            InfoRepository.initUser(auth.currentUser!!)
             navigateToMain()
         } else {
+            updateUI()
             val providers = arrayListOf(
                 AuthUI.IdpConfig.EmailBuilder().build()
             )
@@ -58,10 +59,21 @@ class AuthorizationFragment :
         }
     }
 
+    private fun updateUI() {
+        viewModel.userInfo.observe(viewLifecycleOwner) { user ->
+            if (user.group.isBlank()) {
+                binding.clAuthContainer.visibility = View.VISIBLE
+            } else {
+                navigateToMain()
+            }
+        }
+    }
+
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (result.resultCode == RESULT_OK) {
             val user = FirebaseAuth.getInstance().currentUser
-            Repository.initUser(user!!)
+            InfoRepository.initUser(user!!)
+            viewModel.getUserInfo()
         } else {
             Toast.makeText(requireContext(), getString(R.string.auth_error), Toast.LENGTH_LONG)
                 .show()

@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.itis.my.R
 import com.itis.my.databinding.ItemNoteBinding
 import com.itis.my.model.Note
-import java.time.Instant
-import java.time.ZoneId
+import com.itis.my.utils.getDateString
 
 class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
@@ -41,14 +40,13 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Note) {
-            val zdt = Instant.ofEpochMilli(item.createdAt).atZone(ZoneId.systemDefault())
-                .toLocalDateTime()
+
             binding.tvNoteTitle.text =
                 itemView.context.getString(R.string.note, adapterPosition + 1)
             binding.tvNote.text = item.text
             binding.tvCreatedAt.text = itemView.context.getString(
                 R.string.creation_date,
-                "${zdt.dayOfMonth}.${zdt.month.value}.${zdt.year}  ${zdt.hour}:${zdt.minute}:${zdt.second}"
+                getDateString(item.createdAt)
             )
         }
     }

@@ -15,12 +15,12 @@
         android:id="@+id/photo_fragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_photo_library_24"
-        android:title="@string/photo_page" />
+        android:title="@string/media_page" />
     <item
         android:id="@+id/video_fragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_video_library_24"
-        android:title="@string/video_page" />
+        android:title="@string/connections_page" />
     <item
         android:id="@+id/location_fragment"
         android:enabled="true"
