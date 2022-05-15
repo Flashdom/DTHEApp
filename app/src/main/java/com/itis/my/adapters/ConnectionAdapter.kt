@@ -9,7 +9,8 @@ import com.itis.my.databinding.ItemConnectionBinding
 import com.itis.my.model.Connection
 import com.itis.my.utils.getDateString
 
-class ConnectionAdapter : RecyclerView.Adapter<ConnectionAdapter.ConnectionViewHolder>() {
+class ConnectionAdapter(private val onUpdateFeedbackClick: (connection: Connection) -> Unit) :
+    RecyclerView.Adapter<ConnectionAdapter.ConnectionViewHolder>() {
 
     private val differ = AsyncListDiffer(this, ConnectionItemCallback())
 
@@ -28,7 +29,7 @@ class ConnectionAdapter : RecyclerView.Adapter<ConnectionAdapter.ConnectionViewH
     }
 
     override fun onBindViewHolder(holder: ConnectionViewHolder, position: Int) {
-        holder.bind(differ.currentList[position])
+        holder.bind(differ.currentList[position], onUpdateFeedbackClick)
     }
 
     override fun getItemCount(): Int {
@@ -38,9 +39,13 @@ class ConnectionAdapter : RecyclerView.Adapter<ConnectionAdapter.ConnectionViewH
 
     class ConnectionViewHolder(private val binding: ItemConnectionBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Connection) {
+        fun bind(item: Connection, onUpdateFeedbackClick: (connection: Connection) -> Unit) {
             binding.tvDate.text = getDateString(item.createdAt)
-            binding.tvName.text = item.friendId
+            binding.tvName.text = item.name
+            binding.tvFeedback.text = item.feedback
+            binding.root.setOnClickListener {
+                onUpdateFeedbackClick(item)
+            }
         }
     }
 

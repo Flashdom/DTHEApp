@@ -7,7 +7,7 @@ import com.itis.my.database.entity.*
 
 @Database(
     entities =
-    [VideoEntity::class,
+    [ConnectionEntity::class, VideoEntity::class,
         PhotoEntity::class,
         NoteEntity::class,
         AudioEntity::class,

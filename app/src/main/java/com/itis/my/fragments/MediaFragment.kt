@@ -69,7 +69,7 @@ class MediaFragment : ViewBindingFragment<FragmentMediaBinding>(FragmentMediaBin
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.listenMediaFromDb()
         checkPhotoPermissions()
         viewModel.media.observe(viewLifecycleOwner) { media ->
             binding.pbLoading.visibility = View.GONE
@@ -78,13 +78,17 @@ class MediaFragment : ViewBindingFragment<FragmentMediaBinding>(FragmentMediaBin
 
         binding.fabAddAudio.setOnTouchListener { v, event ->
             binding.pbLoading.visibility = View.VISIBLE
-
-            val file = getTmpAudioFile()
+            val fileName =
+                "${requireContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.absolutePath}/audiorecordtest.3gp"
+            val file = File(fileName).apply {
+                createNewFile()
+                deleteOnExit()
+            }
             if (event.action == MotionEvent.ACTION_DOWN) {
                 recorder = MediaRecorder().apply {
                     setAudioSource(MediaRecorder.AudioSource.MIC)
                     setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-                    setOutputFile(file.path)
+                    setOutputFile(fileName)
                     setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
 
                     try {
@@ -101,7 +105,7 @@ class MediaFragment : ViewBindingFragment<FragmentMediaBinding>(FragmentMediaBin
                 recorder.stop()
                 viewModel.saveAudio(
                     Media.Audio(
-                        Random.nextInt(),
+                        Random.nextInt().toString(),
                         FileProvider.getUriForFile(
                             requireContext(),
                             "com.itis.fileprovider",
@@ -110,7 +114,6 @@ class MediaFragment : ViewBindingFragment<FragmentMediaBinding>(FragmentMediaBin
                         Instant.now().toEpochMilli()
                     )
                 )
-                viewModel.listenMediaFromDb()
             }
 
             return@setOnTouchListener true
@@ -140,8 +143,7 @@ class MediaFragment : ViewBindingFragment<FragmentMediaBinding>(FragmentMediaBin
     private val takeVideoResult =
         registerForActivityResult(ActivityResultContracts.TakeVideo()) { bitmap ->
             latestTmpUri?.let { uri ->
-                viewModel.saveVideo(Media.Video(0, uri, Instant.now().toEpochMilli()))
-                viewModel.listenMediaFromDb()
+                viewModel.saveVideo(Media.Video(0.toString(), uri, Instant.now().toEpochMilli()))
             }
         }
 
@@ -169,24 +171,18 @@ class MediaFragment : ViewBindingFragment<FragmentMediaBinding>(FragmentMediaBin
         return FileProvider.getUriForFile(requireContext(), "com.itis.fileprovider", tmpFile)
     }
 
-    private fun getTmpAudioFile(): File {
-       return File.createTempFile(
-                "3gp_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT).format(Date())}_",
-                ".3gp",
-                requireContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC)
-            ).apply {
-                createNewFile()
-                deleteOnExit()
-            }
-    }
-
 
     private val takeImageResult =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
             if (isSuccess) {
                 latestTmpUri?.let { uri ->
-                    viewModel.savePhoto(Media.Photo(0, uri, Instant.now().toEpochMilli()))
-                    viewModel.listenMediaFromDb()
+                    viewModel.savePhoto(
+                        Media.Photo(
+                            0.toString(),
+                            uri,
+                            Instant.now().toEpochMilli()
+                        )
+                    )
                 }
             }
         }
@@ -206,7 +202,7 @@ class MediaFragment : ViewBindingFragment<FragmentMediaBinding>(FragmentMediaBin
     private fun getTmpPhotoFileUri(): Uri {
         val tmpFile =
             File.createTempFile(
-                "JPEG_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT).format(Date())}_",
+                "PNG_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT).format(Date())}_",
                 ".png",
                 requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
             ).apply {

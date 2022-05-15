@@ -16,6 +16,7 @@ import com.itis.my.InfoRepository
 import com.itis.my.MainActivity
 import com.itis.my.R
 import com.itis.my.databinding.FragmentAuthorizationBinding
+import com.itis.my.utils.SharedPreferencesManager
 
 
 class AuthorizationFragment :
@@ -33,6 +34,9 @@ class AuthorizationFragment :
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).binding.bnvMenu.visibility = View.GONE
         if (auth.currentUser != null) {
+            if (SharedPreferencesManager.isFirstLaunch(requireContext())) {
+                viewModel.updateData(requireContext())
+            }
             InfoRepository.initUser(auth.currentUser!!)
             navigateToMain()
         } else {
@@ -74,6 +78,9 @@ class AuthorizationFragment :
             val user = FirebaseAuth.getInstance().currentUser
             InfoRepository.initUser(user!!)
             viewModel.getUserInfo()
+            if (SharedPreferencesManager.isFirstLaunch(requireContext())) {
+                viewModel.updateData(requireContext())
+            }
         } else {
             Toast.makeText(requireContext(), getString(R.string.auth_error), Toast.LENGTH_LONG)
                 .show()
@@ -81,6 +88,7 @@ class AuthorizationFragment :
     }
 
     private fun navigateToMain() {
+        SharedPreferencesManager.setLaunched(requireContext())
         (activity as MainActivity).binding.bnvMenu.visibility = View.VISIBLE
         findNavController().navigate(AuthorizationFragmentDirections.actionAuthorizationFragmentToMainFragment())
     }

@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.itis.my.InfoRepository
 import com.itis.my.R
 import com.itis.my.databinding.FragmentHomeBinding
 import com.itis.my.fragments.adding.AddingNoteFragment
@@ -16,6 +18,7 @@ import com.itis.my.viewmodels.HomeViewModel
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
+import kotlinx.coroutines.launch
 import java.time.Instant
 import kotlin.random.Random
 
@@ -60,7 +63,6 @@ class HomeFragment : ViewBindingFragment<FragmentHomeBinding>(FragmentHomeBindin
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getUserInfo()
-
         viewModel.userInfo.observe(viewLifecycleOwner) { user ->
             binding.tvFirstName.text = user.firstName
             binding.tvGroup.text = user.group
@@ -78,7 +80,7 @@ class HomeFragment : ViewBindingFragment<FragmentHomeBinding>(FragmentHomeBindin
                 })
             }
             setFragmentResultListener(HOME_REQUEST_KEY) { _, bundle ->
-                val note = bundle.getParcelable<Note>(NotesFragment.NOTE_RESULT_KEY)
+                val note = bundle.getParcelable<Note>(HOME_RESULT_KEY)
                 if (note != null) {
                     viewModel.saveQrCode(
                         Connection(
@@ -88,7 +90,6 @@ class HomeFragment : ViewBindingFragment<FragmentHomeBinding>(FragmentHomeBindin
                             note.text
                         )
                     )
-                    viewModel.saveFeedBack(note.text)
                 }
             }
         }
@@ -96,6 +97,7 @@ class HomeFragment : ViewBindingFragment<FragmentHomeBinding>(FragmentHomeBindin
 
     companion object {
         const val HOME_REQUEST_KEY = "HRK"
+        const val HOME_RESULT_KEY = "home_result"
     }
 
 

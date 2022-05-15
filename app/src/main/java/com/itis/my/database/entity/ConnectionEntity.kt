@@ -2,10 +2,12 @@ package com.itis.my.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.itis.my.database.entity.ConnectionEntity.Companion.TABLE_NAME
 
 @Entity(tableName = TABLE_NAME)
 class ConnectionEntity(
+    @PrimaryKey
     @ColumnInfo(name = ID)
     val id: String,
     @ColumnInfo(name = FRIEND_ID)

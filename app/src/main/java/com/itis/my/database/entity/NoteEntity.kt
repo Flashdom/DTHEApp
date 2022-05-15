@@ -8,6 +8,7 @@ import com.itis.my.database.entity.NoteEntity.Companion.TABLE_NAME
 @Entity(tableName = TABLE_NAME)
 class NoteEntity
     (
+    @PrimaryKey
     @ColumnInfo(name = ID)
     val id: String,
     @ColumnInfo(name = NOTE_TEXT)

@@ -18,12 +18,14 @@ class MediaViewModel : ViewModel() {
     fun saveAudio(audio: Media.Audio) {
         viewModelScope.launch(Dispatchers.IO) {
             InfoRepository.saveAudio(audio)
+            listenMediaFromDb()
         }
     }
 
     fun saveVideo(video: Media.Video) {
         viewModelScope.launch(Dispatchers.IO) {
-            InfoRepository.saveVideos(listOf(video))
+            InfoRepository.saveVideo(video)
+            listenMediaFromDb()
         }
     }
 
@@ -35,7 +37,8 @@ class MediaViewModel : ViewModel() {
 
     fun savePhoto(photo: Media.Photo) {
         viewModelScope.launch(Dispatchers.IO) {
-            InfoRepository.savePhotos(listOf(photo))
+            InfoRepository.savePhoto(photo)
+            listenMediaFromDb()
         }
     }
 }

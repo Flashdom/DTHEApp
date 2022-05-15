@@ -1,9 +1,6 @@
 package com.itis.my.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.itis.my.database.entity.*
 import kotlinx.coroutines.flow.Flow
 
@@ -14,25 +11,25 @@ abstract class DataDao {
     abstract suspend fun saveConnection(connectionEntity: ConnectionEntity)
 
     @Query("SELECT * FROM ${ConnectionEntity.TABLE_NAME}")
-    abstract fun listenConnections(): Flow<List<ConnectionEntity>>
+    abstract suspend fun listenConnections(): List<ConnectionEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun saveAudios(audios: List<AudioEntity>)
+    abstract suspend fun saveAudio(audios: AudioEntity)
 
     @Query("SELECT * FROM ${AudioEntity.TABLE_NAME}")
     abstract fun listenAudiosFromDb(): List<AudioEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun saveNote(notes: NoteEntity)
+    abstract suspend fun saveNote(note: NoteEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun savePhotos(photos: List<PhotoEntity>)
+    abstract suspend fun savePhoto(photo: PhotoEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun saveVideos(videos: List<VideoEntity>)
+    abstract suspend fun saveVideo(video: VideoEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun saveLocations(locations: LocationEntity)
+    abstract suspend fun saveLocation(location: LocationEntity)
 
     @Query("SELECT * FROM ${NoteEntity.TABLE_NAME}")
     abstract fun listenNotesFromDb(): Flow<List<NoteEntity>>

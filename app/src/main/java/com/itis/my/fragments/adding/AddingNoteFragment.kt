@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import com.itis.my.R
 import com.itis.my.databinding.FragmentAddingNoteBinding
+import com.itis.my.fragments.ConnectionFragment
 import com.itis.my.fragments.HomeFragment
 import com.itis.my.fragments.NotesFragment
 import com.itis.my.model.Note
@@ -49,8 +50,8 @@ class AddingNoteFragment : DialogFragment() {
                 setFragmentResult(
                     HomeFragment.HOME_REQUEST_KEY,
                     bundleOf(
-                        HomeFragment.HOME_REQUEST_KEY to Note(
-                            0,
+                        HomeFragment.HOME_RESULT_KEY to Note(
+                            0.toString(),
                             binding.tietNote.text.toString(),
                             Instant.now().toEpochMilli()
                         )
@@ -60,7 +61,17 @@ class AddingNoteFragment : DialogFragment() {
                     NotesFragment.NOTE_REQUEST_KEY,
                     bundleOf(
                         NotesFragment.NOTE_RESULT_KEY to Note(
-                            0,
+                            0.toString(),
+                            binding.tietNote.text.toString(),
+                            Instant.now().toEpochMilli()
+                        )
+                    )
+                )
+                setFragmentResult(
+                    ConnectionFragment.CONNECTION_REQUEST_KEY,
+                    bundleOf(
+                        ConnectionFragment.CONNECTION_RESULT_KEY to Note(
+                            0.toString(),
                             binding.tietNote.text.toString(),
                             Instant.now().toEpochMilli()
                         )

@@ -1,8 +1,14 @@
 package com.itis.my
 
+import android.content.Context
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import com.itis.my.model.Media
+import com.itis.my.utils.FileWrapper
+import com.itis.my.utils.getTmpAudioFile
+import com.itis.my.utils.getTmpPhotoFile
+import com.itis.my.utils.getTmpVideoFile
 
 
 object FilesRepository {
@@ -12,36 +18,48 @@ object FilesRepository {
     private const val videoChild = "videos/"
     private const val audioChild = "audios/"
 
-    fun uploadImage(photo: Media.Photo, photoId: String) {
-        val photoRef = storage.child(imageChild + photoId)
-        val uploadTask = photoRef.putFile(photo.uriImage)
-
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-        }.addOnSuccessListener { taskSnapshot ->
-            // Handle successful uploads
-        }
+    fun uploadImage(photo: Media.Photo, photoId: String): UploadTask {
+        return storage.child("$imageChild${InfoRepository.user.uid}/$photoId")
+            .putFile(photo.uriImage)
     }
 
-    fun uploadVideo(video: Media.Video, videoId: String) {
-        val photoRef = storage.child(videoChild + videoId)
-        val uploadTask = photoRef.putFile(video.videoUri)
-
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-        }.addOnSuccessListener { taskSnapshot ->
-            // Handle successful uploads
-        }
+    fun downLoadImage(photoId: String, context: Context): FileWrapper {
+        val file = getTmpPhotoFile(context)
+        return FileWrapper(
+            file,
+            storage.child("$imageChild${InfoRepository.user.uid}/$photoId").getFile(
+                file
+            )
+        )
     }
 
-    fun uploadAudio(audio: Media.Audio, audioId: String) {
-        val photoRef = storage.child(audioChild + audioId)
-        val uploadTask = photoRef.putFile(audio.uriAudio)
+    fun uploadVideo(video: Media.Video, videoId: String): UploadTask {
+        return storage.child("$videoChild${InfoRepository.user.uid}/$videoId")
+            .putFile(video.videoUri)
+    }
 
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-        }.addOnSuccessListener { taskSnapshot ->
-            // Handle successful uploads
-        }
+    fun downloadVideo(videoId: String, context: Context): FileWrapper {
+        val file = getTmpVideoFile(context)
+        return FileWrapper(
+            file,
+            storage.child("$videoChild${InfoRepository.user.uid}/$videoId").getFile(
+                file
+            )
+        )
+    }
+
+    fun uploadAudio(audio: Media.Audio, audioId: String): UploadTask {
+        return storage.child("$audioChild${InfoRepository.user.uid}/$audioId")
+            .putFile(audio.uriAudio)
+    }
+
+    fun downloadAudio(audioId: String, context: Context): FileWrapper {
+        val file = getTmpAudioFile(context)
+        return FileWrapper(
+            file,
+            storage.child("$audioChild${InfoRepository.user.uid}/$audioId").getFile(
+                file
+            )
+        )
     }
 }

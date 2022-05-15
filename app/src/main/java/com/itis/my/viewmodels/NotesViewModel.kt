@@ -27,7 +27,7 @@ class NotesViewModel : ViewModel() {
 
     fun saveNote(note: Note) {
         viewModelScope.launch(Dispatchers.IO) {
-                InfoRepository.saveNotes(listOf(note))
+                InfoRepository.saveNote(note)
         }
 
     }

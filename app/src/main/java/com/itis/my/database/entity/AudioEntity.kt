@@ -8,9 +8,9 @@ import com.itis.my.database.entity.AudioEntity.Companion.TABLE_NAME
 @Entity(tableName = TABLE_NAME)
 class AudioEntity
     (
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = ID)
-    val id: Int,
+    val id: String,
     @ColumnInfo(name = AUDIO_URI)
     val audioUri: String,
     @ColumnInfo(name = CREATED_AT)

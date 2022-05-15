@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
     private val homeFragment = HomeFragment()
     private val notesFragment = NotesFragment()
     private val mediaFragment = MediaFragment()
-    private val connectionFragment = ConnectionFragment()
     private val locationFragment = LocationFragment()
 
 
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.video_fragment -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.fcv_container, connectionFragment).commit()
+                        .replace(R.id.fcv_container, ConnectionFragment()).commit()
                     true
                 }
                 R.id.location_fragment -> {

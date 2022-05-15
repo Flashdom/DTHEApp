@@ -8,9 +8,9 @@ import com.itis.my.database.entity.VideoEntity.Companion.TABLE_NAME
 @Entity(tableName = TABLE_NAME)
 class VideoEntity
     (
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey()
     @ColumnInfo(name = ID)
-    val id: Int,
+    val id: String,
     @ColumnInfo(name = VIDEO)
     val videoUriString: String,
     @ColumnInfo(name = CREATED_AT)

@@ -88,7 +88,7 @@ class LocationFragment :
                         val addresses =
                             geo.getFromLocation(location.latitude, location.longitude, 1)
                         val currentLocation = Location(
-                            id = 0, text = addresses[0].getAddressLine(0),
+                            id = 0.toString(), text = addresses[0].getAddressLine(0),
                             Instant.now().toEpochMilli()
                         )
                         viewModel.saveLocation(currentLocation)

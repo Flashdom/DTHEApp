@@ -24,13 +24,6 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-
-    fun saveFeedBack(data: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            InfoRepository.saveUserFeedback(data)
-        }
-    }
-
     fun saveQrCode(connection: Connection) {
         viewModelScope.launch(Dispatchers.IO) {
             InfoRepository.saveUserConnection(connection)

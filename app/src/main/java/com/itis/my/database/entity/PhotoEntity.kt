@@ -8,9 +8,9 @@ import com.itis.my.database.entity.PhotoEntity.Companion.TABLE_NAME
 @Entity(tableName = TABLE_NAME)
 class PhotoEntity
     (
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = ID)
-    val id: Int,
+    val id: String,
     @ColumnInfo(name = PHOTO)
     val photoUri: String,
     @ColumnInfo(name = CREATED_AT)

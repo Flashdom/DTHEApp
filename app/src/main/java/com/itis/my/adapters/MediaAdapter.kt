@@ -1,8 +1,9 @@
 package com.itis.my.adapters
 
+import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -83,6 +84,9 @@ class MediaAdapter(private val onPhotoClick: (uri: String) -> Unit) :
             is VideoViewHolder -> {
                 holder.bind(differ.currentList[position] as Media.Video)
             }
+            is AudioViewHolder -> {
+                holder.bind(differ.currentList[position] as Media.Audio)
+            }
         }
 
     }
@@ -137,9 +141,24 @@ class MediaAdapter(private val onPhotoClick: (uri: String) -> Unit) :
     class AudioViewHolder(private val binding: ItemAudioBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Media.Audio) {
+            binding.tvCreatedAt.text = getDateString(item.createdAt)
+            binding.ivPlay.setOnClickListener {
+                MediaPlayer().apply {
+                    setAudioAttributes(
+                        AudioAttributes.Builder()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .build()
+                    )
+                    setDataSource(itemView.context, item.uriAudio)
+                    prepare()
+                    start()
+                    binding.ivPlay.isEnabled = false
+                }.setOnCompletionListener {
+                    binding.ivPlay.isEnabled = true
+                }
+            }
 
         }
     }
-
-
 }
