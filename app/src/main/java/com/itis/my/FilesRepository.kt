@@ -2,6 +2,7 @@ package com.itis.my
 
 import android.content.Context
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import com.itis.my.model.Media

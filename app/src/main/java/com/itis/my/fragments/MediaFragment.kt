@@ -7,7 +7,6 @@ import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,9 +18,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.itis.my.adapters.MediaAdapter
 import com.itis.my.databinding.FragmentMediaBinding
 import com.itis.my.model.Media
+import com.itis.my.utils.WavRecorder
 import com.itis.my.viewmodels.MediaViewModel
 import java.io.File
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.util.*
@@ -33,6 +32,7 @@ class MediaFragment : ViewBindingFragment<FragmentMediaBinding>(FragmentMediaBin
     private val viewModel: MediaViewModel by viewModels()
 
     private lateinit var recorder: MediaRecorder
+    private lateinit var wavRecorder: WavRecorder
 
     private fun checkPhotoPermissions() {
 
@@ -79,30 +79,34 @@ class MediaFragment : ViewBindingFragment<FragmentMediaBinding>(FragmentMediaBin
         binding.fabAddAudio.setOnTouchListener { v, event ->
             binding.pbLoading.visibility = View.VISIBLE
             val fileName =
-                "${requireContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.absolutePath}/audiorecordtest.3gp"
+                "${requireContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC)?.absolutePath}/audiorecordtest.wav"
             val file = File(fileName).apply {
                 createNewFile()
                 deleteOnExit()
             }
             if (event.action == MotionEvent.ACTION_DOWN) {
-                recorder = MediaRecorder().apply {
-                    setAudioSource(MediaRecorder.AudioSource.MIC)
-                    setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-                    setOutputFile(fileName)
-                    setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+                wavRecorder = WavRecorder(requireContext())
+                wavRecorder.startRecording(fileName, false)
+                /*
+                 recorder = MediaRecorder().apply {
+                     setOutputFile(fileName)
+                     setAudioSource(MediaRecorder.AudioSource.MIC);
+                     setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                     setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
-                    try {
-                        prepare()
-                    } catch (e: IOException) {
-                        Log.e("as", "prepare() failed")
-                    }
-                    start()
-                }
+                     try {
+                         prepare()
+                     } catch (e: IOException) {
+                         Log.e("as", "prepare() failed")
+                     }
+                     start()
+                 }*/
 
             }
 
             if (event.action == MotionEvent.ACTION_UP) {
-                recorder.stop()
+                //recorder.stop()
+                wavRecorder.stopRecording()
                 viewModel.saveAudio(
                     Media.Audio(
                         Random.nextInt().toString(),
